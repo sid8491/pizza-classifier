@@ -4,12 +4,13 @@ Created on Sat Sep 16 20:50:52 2017
 
 @author: Siddharth.Shukla01
 """
-
+print ('Loading required libraries...')
 import pandas as pd
 import numpy as np
 import glob
 from PIL import Image
 
+print ('Loading the model...')
 # loading the model
 from sklearn.externals import joblib
 model_name = 'pizza.pkl'
@@ -17,10 +18,11 @@ scaling_model = 'scaling.pkl'
 clf = joblib.load(model_name)
 scaling = joblib.load(scaling_model)
 
+print ('Extracting features from images...')
 test_files = glob.glob('test/' + "*.jpg")
 new_test_df = pd.DataFrame()
 for t in test_files:
-    print (t)
+    print ('Processing : ', t)
     test_img = Image.open(t)
     print (test_img.size)
     blocks = 4
@@ -33,6 +35,7 @@ for t in test_files:
         test_feature[idx] += 1
     test_feature = pd.DataFrame(test_feature)
     new_test_df = pd.concat([new_test_df, test_feature], axis = 1)
+print ('Feature extraction completed, predicted output...')
 new_test_df = new_test_df.transpose()
 new_test_df = new_test_df.reset_index(drop=True)
 new_y_test = new_test_df.iloc[:, :].values
@@ -42,4 +45,4 @@ new_y_pred = clf.predict(new_y_test)
 #print (new_y_pred)
 
 result = list(zip(test_files, new_y_pred))
-print ('Result ------------> ', result)
+print ('Result ------------> \n', result)
