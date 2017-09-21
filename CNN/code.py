@@ -9,11 +9,11 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 # dimensions of our images.
 img_width, img_height = 150, 150
 
-train_data_dir = 'data/train'
-validation_data_dir = 'data/validation'
+train_data_dir = 'train'
+validation_data_dir = 'validation'
 nb_train_samples = 3310
 nb_validation_samples = 1300
-epochs = 50
+epochs = 30
 batch_size = 16
 
 if K.image_data_format() == 'channels_first':
@@ -75,4 +75,4 @@ model.fit_generator(
     validation_data=validation_generator,
     validation_steps=nb_validation_samples // batch_size)
 
-model.save_weights('first_try.h5')
+model.save_weights('pizza_cnn.h5')
